@@ -1,13 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "files.h"
+#include "session.h"
+
+static char path_buffer[1024];
 
 int main(void)
 {
-  char *length_string = getenv("CONTENT_LENGTH");
-  long length = length_string ? atol(length_string) : 0;
-  printf("Content-Type: text/plain\n\nMETHOD: %s\nURI: %s\nQUERY: %s\nDATA:\n",
-      getenv("REQUEST_METHOD"), getenv("REQUEST_URI"), getenv("QUERY_STRING"));
-  while (length--) putchar(getchar());
+  FILE *f;
+  char *method = getenv("REQUEST_METHOD");
+  char *cookie = getenv("HTTP_COOKIE");
+  char *token = cookie ? strstr(cookie, "token=") : NULL;
+  char *username = NULL;
+  if (token)
+  {
+    token = strchr(token, '=') + 1;
+    if (!session_is_token_valid(token)) token = NULL;
+    else username = session_get_username(token);
+  }
+  if (strcmp(method, "GET"))
+  {
+    if (!username)
+    {
+      printf("Content-Type: text/html\n\n");
+      files_print("html/Authorization.html");
+    }
+    else printf("Status: 303 See Other\nLocation: /%s\n\n", username);
+  }
   return EXIT_SUCCESS;
 }
 
