@@ -8,6 +8,7 @@ build: $(OBJECTS)
 	clang -o login.cgi login.o
 
 install: build
+	sudo cp -f *.cgi /var/www/seaport/
 
 $(OBJECTS): %.o: %.c $(HEADERS)
 	clang -c -o $@ $<
