@@ -7,7 +7,7 @@ FILE *files_open(const char *name, const char *mode)
 {
   static char path[1024];
   char *root = getenv("DOCUMENT_ROOT");
-  return root ? fopen(strcat(strcpy(path, root), name), mode) : NULL;
+  return root ? fopen(strcat(strcat(strcpy(path, root), "/"), name), mode) : NULL;
 }
 
 void files_print(const char *name)

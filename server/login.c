@@ -12,7 +12,7 @@ int main(void)
   FILE *f;
   char *method = getenv("REQUEST_METHOD");
   char *cookie = getenv("HTTP_COOKIE");
-  char *token = cookie ? strstr(cookie, "token=") : NULL;
+  char *token = NULL;/* cookie ? strstr(cookie, "token=") : NULL; */
   char *username = NULL;
   if (token)
   {
@@ -20,7 +20,7 @@ int main(void)
     if (!session_is_token_valid(token)) token = NULL;
     else username = session_get_username(token);
   }
-  if (strcmp(method, "GET"))
+  if (!strcmp(method, "GET"))
   {
     if (!username)
     {
@@ -28,6 +28,10 @@ int main(void)
       files_print("html/Authorization.html");
     }
     else printf("Status: 303 See Other\nLocation: /%s\n\n", username);
+  }
+  else
+  {
+    printf("Status: 403 Forbidden\n\n");
   }
   return EXIT_SUCCESS;
 }
