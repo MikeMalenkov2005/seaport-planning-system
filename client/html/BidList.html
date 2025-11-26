@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Seaport Planning System</title>
+		<meta charset='utf-8'/>
+	</head>
+	<body>
+		<div id='container'>
+			<div id='header'>
+				<h1>Seaport Planning System: Список заявок</h1>
+			</div>
+			<div id='navigation'>
+				<h3>Меню:</h3>
+			</div>
+			<div id='content'>
+				<table>
+					<thead>
+						<tr><th>Идентификатор заявки</th><th>Дата подачи заявки</th><th>Дата последнего изменения</th><th>Статус</th></tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type='text'/></td>
+							<td><input type='text'/></td>
+							<td><input type='text'/></td>
+							<td>
+								<select>
+									<option>Принята</option>
+									<option>Отказ</option>
+									<option>Направлена в таможню</option>
+									<option>Направлена на склад</option>
+									<option>Направлена диспетчеру</option>
+									<option>Направлена стивидору</option>
+									<option>Обрабатывается в таможне</option>
+									<option>Обрабатывается на складе</option>
+									<option>Обрабатывается диспетчером</option>
+									<option>Обрабатывается стивидором</option>
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table border='1'>
+					<caption><h3>Список заявок</h3></caption>
+					<thead>
+						<tr><th>Идентификатор заявки</th><th>Дата подачи заявки</th><th>Дата последнего изменения</th><th>Статус</th></tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<button><<</button>
+				<button>>></button>
+			</div>
+		</div>
+	</body>
+</html>
