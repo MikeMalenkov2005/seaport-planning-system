@@ -1,0 +1,90 @@
+body
+{
+	background-color: #C5CAE9;
+}
+
+#container
+{
+	width: 90%;
+	margin: auto auto;
+	color: #FFFFFF;
+}
+
+#header
+{
+	background-color: #283593;
+	border: 5px solid black;
+	border-radius: 10px;
+	margin: 5px;
+}
+
+#navigation
+{
+	background-color: #283593;
+	border: 5px solid black;
+	border-radius: 10px;
+	margin: 5px;
+	float: left;
+	width: 30%;
+	text-align: left;
+}
+
+#auth_content
+{
+	background-color: #283593;
+	border: 5px solid black;
+	border-radius: 10px;
+	margin: 5px;
+}
+
+#content
+{
+	background-color: #283593;
+	border: 5px solid black;
+	border-radius: 10px;
+	margin: 5px;
+	float: right;
+	width: 67%;
+}
+
+input[type='submit']
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	padding: 5px 32px;
+}
+
+input:not([type='submit']), textarea, select
+{
+	background-color: #C5CAE9;
+	color: #000000;
+}
+
+button
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	padding: 5px 32px;
+}
+
+.visible
+{
+	border-collapse: collapse;
+	background-color: #C5CAE9;
+	color: #000000;
+}
+
+caption
+{
+	color: #FFFFFF;
+}
+
+table.visible td, table.visible th
+{
+	border: 3px solid black;
+}
+
+table.in_center td
+{
+	text-align: center;
+}
