@@ -2,7 +2,7 @@ HEADERS = $(wildcard *.h)
 SOURCES = $(wildcard *.c)
 OBJECTS = $(patsubst %.c,%.o,$(SOURCES))
 
-COMMON = session.o files.o
+COMMON = session.o files.o input.o
 
 .PHONY: clean build install
 
