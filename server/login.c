@@ -2,18 +2,27 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "form.h"
 #include "files.h"
+#include "input.h"
 #include "session.h"
 
-static char path_buffer[1024];
+void redirect_loggedin_user(const char *username, const char *new_token)
+{
+  printf("Status: 303 See Other\n");
+  if (new_token) printf("Set-Cookie: token=%s; Max-Age=86400; Path=/; HttpOnly; Secure\n", new_token);
+  printf("Location: /%s\n\n", username);
+}
 
 int main(void)
 {
-  FILE *f;
+  static char buffers[2][32];
+  char *input = load_input();
   char *method = getenv("REQUEST_METHOD");
   char *cookie = getenv("HTTP_COOKIE");
-  char *token = NULL;/* cookie ? strstr(cookie, "token=") : NULL; */
+  char *token = cookie ? strstr(cookie, "token=") : NULL;
   char *username = NULL;
+  char *password = NULL;
   if (token)
   {
     token = strchr(token, '=') + 1;
@@ -27,12 +36,22 @@ int main(void)
       printf("Content-Type: text/html\n\n");
       files_print("html/Authorization.html");
     }
-    else printf("Status: 303 See Other\nLocation: /%s\n\n", username);
+    else redirect_loggedin_user(username, NULL);
+  }
+  else if (!strcmp(method, "POST"))
+  {
+    username = form_get(buffers[0], sizeof(buffers[0]), input, "username");
+    password = form_get(buffers[1], sizeof(buffers[1]), input, "password");
+    if (username && strlen(username) > 16) username = NULL;
+    if (password && strlen(password) > 16) password = NULL;
+    token = session_new_token(username, password);
+    redirect_loggedin_user(username, token);
   }
   else
   {
     printf("Status: 403 Forbidden\n\n");
   }
+  free_input(input);
   return EXIT_SUCCESS;
 }
 
