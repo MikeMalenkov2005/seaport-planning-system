@@ -45,7 +45,12 @@ int main(void)
     if (username && strlen(username) > 16) username = NULL;
     if (password && strlen(password) > 16) password = NULL;
     token = session_new_token(username, password);
-    redirect_loggedin_user(username, token);
+    if (!token)
+    {
+      printf("Content-Type: text/html\n\n");
+      files_print("html/Authorization.html");
+    }
+    else redirect_loggedin_user(username, token);
   }
   else
   {
