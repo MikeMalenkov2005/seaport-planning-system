@@ -14,42 +14,44 @@
 				<h3>Меню:</h3>
 			</div>
 			<div id='content' align='center'>
-				<table>
-					<caption><h3>Форма добавления контейнера</h3></caption>
-					<tbody>
-						<tr><td>Код владельца:</td><td><input type='text'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr>
-							<td>Идентификатор категории оборудования:</td>
-							<td>
-								<select>
-									<option>Z</option>
-									<option>R</option>
-									<option>U</option>
-									<option>J</option>
-								</select>
-							</td>
-							<td>* Обязательно для заполнения</td>
-						</tr>
-						<tr><td>Серийный номер:</td><td><input type='text'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr><td>Контрольное число:</td><td><input type='text'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr><td>Код страны:</td><td><input type='text'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr><td>Код внешних габаритов контейнера:</td><td><input type='text'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr>
-							<td>Код типа контейнера:</td>
-							<td>
-								<select>
-									<option>G1</option>
-								</select>
-							</td>
-							<td>* Обязательно для заполнения</td>
-						</tr>
-						<tr><td>Масса брутто:</td><td><input type='number'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr><td>Масса тары:</td><td><input type='number'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr><td>Грузоподъёмность:</td><td><input type='number'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr><td>Вместимость:</td><td><input type='number'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr><td><button>Добавить</button></td></tr>
-					</tbody>
-				</table>
+				<form method='POST' action=''>
+					<table>
+						<caption><h3>Форма добавления контейнера</h3></caption>
+						<tbody>
+							<tr><td>Код владельца:</td><td><input type='text' name='owner_code' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr>
+								<td>Идентификатор категории оборудования:</td>
+								<td>
+									<select name='device'>
+										<option value='Z'>Z</option>
+										<option value='R'>R</option>
+										<option value='U'>U</option>
+										<option value='J'>J</option>
+									</select>
+								</td>
+								<td>* Обязательно для заполнения</td>
+							</tr>
+							<tr><td>Серийный номер:</td><td><input type='text' name='serial' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr><td>Контрольное число:</td><td><input type='text' name='control_number' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr><td>Код страны:</td><td><input type='text' name='country_code' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr><td>Код внешних габаритов контейнера:</td><td><input type='text' name='size_code' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr>
+								<td>Код типа контейнера:</td>
+								<td>
+									<select name='type_code'>
+										<option value='G1'>G1</option>
+									</select>
+								</td>
+								<td>* Обязательно для заполнения</td>
+							</tr>
+							<tr><td>Масса брутто:</td><td><input type='number' min='0' step='0.001' name='cargo_weight' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr><td>Масса тары:</td><td><input type='number' min='0' step='0.001' name='container_weight' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr><td>Грузоподъёмность:</td><td><input type='number' min='0' step='0.001' name='usefull' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr><td>Вместимость:</td><td><input type='number' min='0' step='0.001' name='space' required/></td><td>* Обязательно для заполнения</td></tr>
+							<tr><td><input type='submit' value='Добавить'/></td></tr>
+						</tbody>
+					</table>
+				</form>
 			</div>
 		</div>
 	</body>
