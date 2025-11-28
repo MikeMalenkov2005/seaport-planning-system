@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "form.h"
 #include "files.h"
 #include "input.h"
 #include "session.h"
@@ -15,13 +16,13 @@ void redirect_loggedin_user(const char *username, const char *new_token)
 
 int main(void)
 {
+  static char buffers[2][32];
   char *input = load_input();
   char *method = getenv("REQUEST_METHOD");
   char *cookie = getenv("HTTP_COOKIE");
   char *token = cookie ? strstr(cookie, "token=") : NULL;
   char *username = NULL;
   char *password = NULL;
-  char *key = NULL;
   if (token)
   {
     token = strchr(token, '=') + 1;
@@ -39,12 +40,10 @@ int main(void)
   }
   else if (!strcmp(method, "POST"))
   {
-    for (key = strtok(input, "="); key; key = strtok(NULL, "="))
-    {
-      if (!strcmp(key, "username")) username = strtok(NULL, "&");
-      else if (!strcmp(key, "password")) password = strtok(NULL, "&");
-      else (void)strtok(NULL, "&");
-    }
+    username = form_get(buffers[0], sizeof(buffers[0]), input, "username");
+    password = form_get(buffers[1], sizeof(buffers[1]), input, "password");
+    if (username && strlen(username) > 16) username = NULL;
+    if (password && strlen(password) > 16) password = NULL;
     token = session_new_token(username, password);
     redirect_loggedin_user(username, token);
   }
