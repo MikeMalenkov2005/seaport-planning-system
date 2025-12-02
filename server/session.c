@@ -1,6 +1,7 @@
 #include "session.h"
 
 #include "base64.h"
+#include "db.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -23,9 +24,10 @@ int session_is_token_valid(const char *token)
   char *tstr;
   time_t t;
   char *data = base64_decode(token_buffer, sizeof(token_buffer), token);
+  int user;
   if (!data) return 0;
-  if (!strtok(data, "\n")) return 0;
-  if (!strtok(NULL, "\n")) return 0;
+  if ((user = db_find_user(strtok(data, "\n"))) == -1) return 0;
+  if (!db_is_password_valid(user, strtok(NULL, "\n"))) return 0;
   if (!(tstr = strtok(NULL, "\n"))) return 0;
   if (sscanf(tstr, "%lu", &t) != 1) return 0;
   dt = difftime(time(NULL), t);
