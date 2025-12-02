@@ -43,7 +43,7 @@ int db_find_user(const char *username)
     if (PQresultStatus(res) != PGRES_COMMAND_OK)
     {
       fprintf(stderr,
-          "SELECT FROM employee BY login FAILED: %s",
+          "SELECT FROM employee BY login FAILED: %s\n",
           PQresultErrorMessage(res));
     }
     else if (PQntuples(res) == 1 && PQnfields(res) == 1)
@@ -70,7 +70,7 @@ int db_is_password_valid(int user, const char *password)
     if (PQresultStatus(res) != PGRES_COMMAND_OK)
     {
       fprintf(stderr,
-          "SELECT FROM employee BY id_employee FAILED: %s",
+          "SELECT FROM employee BY id_employee FAILED: %s\n",
           PQresultErrorMessage(res));
     }
     else if (PQntuples(res) == 1 && PQnfields(res) == 1)
@@ -84,5 +84,28 @@ int db_is_password_valid(int user, const char *password)
 
 int db_is_token_blacklisted(const char *token)
 {
+  PGresult *res;
+  int p_length, p_format = 0, result = 0;
+  if (token && db_init())
+  {
+    p_length = strlen(token);
+    res = PQexecParams(conn,
+        "SELECT id FROM blacklisted_tokens WHERE token = $1;",
+        1, NULL, &token, &p_length, &p_format, 0);
+    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    {
+      fprintf(stderr,
+          "SELECT FROM blacklisted_tokens BY token FAILED: %s\n",
+          PQresultErrorMessage(res));
+    }
+    else if (PQntuples(res) > 0) result = 1;
+    PQclear(res);
+  }
+  return result;
+}
+
+void db_blacklist_token(const char *token)
+{
+  (void)token;
 }
 

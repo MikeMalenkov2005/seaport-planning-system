@@ -25,7 +25,7 @@ int session_is_token_valid(const char *token)
   time_t t;
   char *data = base64_decode(token_buffer, sizeof(token_buffer), token);
   int user;
-  if (!data) return 0;
+  if (!data || db_is_token_blacklisted(token)) return 0;
   if ((user = db_find_user(strtok(data, "\n"))) == -1) return 0;
   if (!db_is_password_valid(user, strtok(NULL, "\n"))) return 0;
   if (!(tstr = strtok(NULL, "\n"))) return 0;

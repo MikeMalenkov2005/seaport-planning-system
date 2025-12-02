@@ -9,9 +9,10 @@
 
 void redirect_loggedin_user(const char *username, const char *new_token)
 {
+  (void)username;
   printf("Status: 303 See Other\n");
   if (new_token) printf("Set-Cookie: token=%s; Max-Age=86400; Path=/; HttpOnly; Secure\n", new_token);
-  printf("Location: /%s\n\n", username);
+  printf("Location: /html.cgi?page=BidList\n\n");
 }
 
 int main(void)
