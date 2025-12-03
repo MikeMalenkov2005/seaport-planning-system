@@ -13,5 +13,7 @@ int db_is_password_valid(int user, const char *password);
 
 int db_is_token_blacklisted(const char *token);
 
+void db_print_user_info(const char *username);
+
 #endif
 

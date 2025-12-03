@@ -9,6 +9,7 @@ COMMON = session.o files.o input.o form.o base64.o
 build: $(OBJECTS)
 	clang -o login.cgi login.o $(COMMON)
 	clang -o html.cgi html.o $(COMMON)
+	clang -o role.cgi role.o $(COMMON)
 
 install: build
 	sudo cp -f *.cgi /var/www/seaport/

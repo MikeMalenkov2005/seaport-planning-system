@@ -109,3 +109,49 @@ void db_blacklist_token(const char *token)
   (void)token;
 }
 
+void db_print_user_info(const char *username)
+{
+  PGresult *res;
+  int p_length, p_format = 0, count = 0;
+  putchar('{');
+  if (username && db_init())
+  {
+    p_length = strlen(username);
+    res = PQexecParams(conn,
+        "SELECT (e.surname, e.name, e.patronymic, j.name) FROM employee AS e"
+        "JOIN job_title AS j ON e.id_job_title = j.id_job_title"
+        "WHERE e.login = $1 LIMIT 1;",
+        1, NULL, &username, &p_length, &p_format, 0);
+    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    {
+      fprintf(stderr,
+          "SELECT FROM employee JOIN job_title BY login FAILED: %s\n",
+          PQresultErrorMessage(res));
+    }
+    if (PQntuples(res) > 0 && PQnfields(res) == 4)
+    {
+      if (PQgetvalue(res, 0, 0))
+      {
+        if (count++) putchar(',');
+        printf("\"surname\":\"%s\"", PQgetvalue(res, 0, 0));
+      }
+      if (PQgetvalue(res, 0, 1))
+      {
+        if (count++) putchar(',');
+        printf("\"name\":\"%s\"", PQgetvalue(res, 0, 1));
+      }
+      if (PQgetvalue(res, 0, 2))
+      {
+        if (count++) putchar(',');
+        printf("\"patronym\":\"%s\"", PQgetvalue(res, 0, 2));
+      }
+      if (PQgetvalue(res, 0, 3))
+      {
+        if (count++) putchar(',');
+        printf("\"role\":\"%s\"", PQgetvalue(res, 0, 3));
+      }
+    }
+  }
+  putchar('}');
+}
+
