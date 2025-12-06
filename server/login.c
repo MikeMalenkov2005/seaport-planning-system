@@ -46,7 +46,7 @@ int main(void)
     if (username && strlen(username) > 16) username = NULL;
     if (password && strlen(password) > 16) password = NULL;
     token = session_new_token(username, password);
-    if (!token)
+    if (!token || !session_is_token_valid(token))
     {
       printf("Content-Type: text/html\n\n");
       files_print("html/Authorization.html");

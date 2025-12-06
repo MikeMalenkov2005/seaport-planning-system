@@ -10,7 +10,9 @@ static PGconn *conn;
 int db_init(void)
 {
   if (conn) return 1;
-  conn = PQconnectdb("postgresql://regular_user@localhost?port=5432&dbname=project_db");
+  /* TODO: For real project / remote database the password should be hidden */
+  conn = PQconnectdb(
+      "postgresql://database_administrator:password@localhost:5432/project_db");
   if (PQstatus(conn) != CONNECTION_OK)
   {
     fprintf(stderr, "Database connection failed: %s\n", PQerrorMessage(conn));

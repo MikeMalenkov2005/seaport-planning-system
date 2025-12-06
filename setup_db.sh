@@ -288,6 +288,9 @@ INSERT INTO container_status (name) VALUES
 ('Загружен'),
 ('Приостановлен');
 
+INSERT INTO employee (surname, name, login, password, id_job_title) VALUES
+('Иванов', 'Иван', 'ivanivanivan', 'ivanivanivan', 1);
+
 EOF
 
 echo "=== Готово! ==="
