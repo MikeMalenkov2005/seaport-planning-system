@@ -21,3 +21,53 @@ function CheckControlNumber()
 	if (result == false)
 		alert('Введено некорректное контрольное число!');
 }
+
+function CheckCountryCode()
+{
+	let result = /^[A-Z]{2}$/.test(document.getElementsByName('country_code')[0].value);
+
+	if (result == false)
+		alert('Введен некорректный код страны!');
+
+	return result;
+}
+
+function CheckSizeCode()
+{
+	let result = /^[A-Z0-9]{2}$/.test(document.getElementsByName('size_code')[0].value);
+
+	if (result == false)
+		alert('Введен некорректный код внешних габаритов!');
+
+	return result;
+}
+
+function CheckCargoWeight()
+{
+	let result = document.getElementsByName('cargo_weight')[0].valueAsNumber > 0;
+
+	if (result == false)
+		alert('Введена некорректная масса брутто!');
+
+	return result;
+}
+
+function CheckContainerWeight()
+{
+	let result = document.getElementsByName('container_weight')[0].valueAsNumber > 0;
+
+	if (result == false)
+		alert('Введена некорректная масса тары!');
+
+	return result;
+}
+
+function CheckUsefull()
+{
+	let result = document.getElementsByName('usefull')[0].valueAsNumber > 0;
+
+	if (result == false)
+		alert('Введена некорректная грузоподъёмность!');
+
+	return result;
+}
