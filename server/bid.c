@@ -25,8 +25,8 @@ int main(void)
   {
     if (!strcmp(method, "POST"))
     {
-      db_add_bid(input);
       session_redirect_home(NULL);
+      db_add_bid(input);
     }
     else printf("Status: 400 Bad Request\n\n");
   }

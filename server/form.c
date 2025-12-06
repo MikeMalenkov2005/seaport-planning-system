@@ -38,24 +38,22 @@ char *form_get(char *buffer, size_t size, const char *form, const char *key)
 
 size_t form_get_length(const char *form, const char *key)
 {
-  size_t key_len = 0;
+  size_t key_len = 0, len = 0;
   if (!form || !key) return 0;
   key_len = strlen(key);
   while (form)
   {
     if (strcspn(form, "=") == key_len && !strncmp(form, key, key_len))
     {
-      while (*form && *form != '&')
+      for (form += key_len + 1; *form && *form != '&'; ++len)
       {
-        ++key_len;
         if (*form++ == '%') form += 2;
       }
-      return *form ? strcspn(++form, "&") : 0;
       form = NULL;
     }
     else if ((form = strchr(form, '&'))) ++form;
   }
-  return key_len;
+  return len;
 }
 
 char *form_next_key(const char *new_form)

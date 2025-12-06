@@ -163,7 +163,7 @@ int db_add_bid(const char *form)
   const char *args[29];
   PGresult *res;
   int lens[29], formats[29] = { 0 };
-  int argnum = 0, result = 0;
+  int argnum = 1, result = 0;
   const char *key = form_next_key(form);
   if (key && db_init()) while (key)
   {
@@ -221,14 +221,18 @@ int db_add_bid(const char *form)
       if ((args[25] = form_clone(form, key))) ++argnum;
     if (!strcmp(key, "getter"))
       if ((args[26] = form_clone(form, key))) ++argnum;
-    if (!strcmp(key, "other"))
-      if ((args[27] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "other")) args[27] = form_clone(form, key);
     if (!strcmp(key, "quantity"))
       if ((args[28] = form_clone(form, key))) ++argnum;
+    key = form_next_key(NULL);
   }
   if (argnum == sizeof(args) / sizeof(*args))
   {
-    while (argnum--) lens[argnum] = strlen(args[argnum]);
+    while (argnum--)
+    {
+      lens[argnum] = args[argnum] ? strlen(args[argnum]) : 0;
+      fprintf(stderr, "F%d: '%s'\n", argnum, args[argnum]);
+    }
     res = PQexecParams(conn, "INSERT INTO application (name_organization,"
         "inn_organization, contact_phone, email, cargo_name, tn_code,"
         "id_direction, unit_length, unit_width, unit_height, unit_mass,"
@@ -236,21 +240,25 @@ int db_add_bid(const char *form)
         "id_transport_way_out, pickup_date, import_date, id_warehouse_type,"
         "shelf_life, packaging_requirements, manufacturer, shipper,"
         "departure_port, departure_country, destination_port,"
-        "destination_country, receiver, instructions_info, unit_count"
+        "destination_country, receiver, instructions_info, unit_count,"
         "id_application_status) VALUES ($1, $2, $3, $4, $5, $6, (SELECT "
-        "id_direction FROM direction WHERE name = $7), $8, $9,"
-        "$10, $11, $12, $13, (SELECT id_transport_way FROM transport_way "
-        "WHERE id_transport_way = $14), (SELECT id_transport_way FROM "
-        "transport_way WHERE id_transport_way = $15), $16, $17,"
-        "(SELECT id_warehouse_type FROM warehouse_type WHERE name = $18),"
-        "$19, $20, 21, $22, $23, $24, $25, $26, $27, $28, $29, 3);",
+        "id_direction FROM direction WHERE name = $7), $8, $9, $10, $11, $12,"
+        "$13, (SELECT id_transport_way FROM transport_way WHERE name = $14),"
+        "(SELECT id_transport_way FROM transport_way WHERE name = $15), $16,"
+        "$17, (SELECT id_warehouse_type FROM warehouse_type WHERE name = $18),"
+        "$19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, 3);",
         sizeof(args) / sizeof(*args), NULL, args, lens, formats, 0);
+    fprintf(stderr, "ST: %d\n", PQresultStatus(res));
     if (PQresultStatus(res) != PGRES_COMMAND_OK)
     {
       fprintf(stderr,
           "INSERT INTO applications FAILED: %s\n", PQresultErrorMessage(res));
     }
     else result = 1;
+  }
+  for (argnum = sizeof(args) / sizeof(*args); argnum--;)
+  {
+    if (args[argnum]) free((void*)args[argnum]);
   }
   return result;
 }

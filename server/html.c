@@ -24,6 +24,7 @@ int main(void)
     if (!session_is_token_valid(token)) token = NULL;
     else username = session_get_username(token);
   }
+  fprintf(stderr, "Q: '%s', SZ: %zu\n", query, len);
   if (token && len && len < sizeof(buffers[1]) - 10 && !strcmp(method, "GET"))
   {
     filename = form_get(buffers[0], sizeof(buffers[0]), query, "page");
