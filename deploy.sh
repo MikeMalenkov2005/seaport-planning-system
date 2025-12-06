@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo cp -Trf ./client/html /var/www/seaport/html
 sudo cp -Trf ./client/css /var/www/seaport/css
 sudo cp -Trf ./client/js /var/www/seaport/js
