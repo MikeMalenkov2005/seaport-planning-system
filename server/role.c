@@ -24,6 +24,7 @@ int main(void)
     db_print_user_info(username);
   }
   else printf("Status: 403 Forbidden\n\n");
+  db_terminate();
   return EXIT_SUCCESS;
 }
 

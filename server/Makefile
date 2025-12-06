@@ -2,17 +2,16 @@ HEADERS = $(wildcard *.h)
 SOURCES = $(wildcard *.c)
 OBJECTS = $(patsubst %.c,%.o,$(SOURCES))
 
-COMMON = session.o files.o input.o form.o base64.o db.o -lpq
+COMMON = session.o files.o input.o form.o base64.o db.o
+MODULES = login.cgi role.cgi html.cgi
 
 .PHONY: clean build install
 
-build: $(OBJECTS)
-	clang -o login.cgi login.o $(COMMON)
-	clang -o html.cgi html.o $(COMMON)
-	clang -o role.cgi role.o $(COMMON)
-
-install: build
+install: $(MODULES)
 	sudo cp -f *.cgi /var/www/seaport/
+
+$(MODULES): %.cgi: %.o $(COMMON)
+	clang -o $@ $^ -lpq
 
 $(OBJECTS): %.o: %.c $(HEADERS)
 	clang -c -o $@ $<

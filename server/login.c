@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "db.h"
 #include "form.h"
 #include "files.h"
 #include "input.h"
@@ -41,6 +42,7 @@ int main(void)
   }
   else if (!strcmp(method, "POST"))
   {
+    fprintf(stderr, "RQ: '%s' \n", input);
     username = form_get(buffers[0], sizeof(buffers[0]), input, "username");
     password = form_get(buffers[1], sizeof(buffers[1]), input, "password");
     if (username && strlen(username) > 16) username = NULL;
@@ -58,6 +60,7 @@ int main(void)
     printf("Status: 403 Forbidden\n\n");
   }
   free_input(input);
+  db_terminate();
   return EXIT_SUCCESS;
 }
 

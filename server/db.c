@@ -42,7 +42,7 @@ int db_find_user(const char *username)
     res = PQexecParams(conn,
         "SELECT id_employee FROM employee WHERE login = $1 LIMIT 1;",
         1, NULL, &username, &p_length, &p_format, 0);
-    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
       fprintf(stderr,
           "SELECT FROM employee BY login FAILED: %s\n",
@@ -69,7 +69,7 @@ int db_is_password_valid(int user, const char *password)
     res = PQexecParams(conn,
         "SELECT password FROM employee WHERE id_employee = $1;",
         1, NULL, &p_user_id_ptr, &p_length, &p_format, 0);
-    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
       fprintf(stderr,
           "SELECT FROM employee BY id_employee FAILED: %s\n",
@@ -94,7 +94,7 @@ int db_is_token_blacklisted(const char *token)
     res = PQexecParams(conn,
         "SELECT id FROM blacklisted_tokens WHERE token = $1;",
         1, NULL, &token, &p_length, &p_format, 0);
-    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
       fprintf(stderr,
           "SELECT FROM blacklisted_tokens BY token FAILED: %s\n",
@@ -124,7 +124,7 @@ void db_print_user_info(const char *username)
         "JOIN job_title AS j ON e.id_job_title = j.id_job_title"
         "WHERE e.login = $1 LIMIT 1;",
         1, NULL, &username, &p_length, &p_format, 0);
-    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
       fprintf(stderr,
           "SELECT FROM employee JOIN job_title BY login FAILED: %s\n",

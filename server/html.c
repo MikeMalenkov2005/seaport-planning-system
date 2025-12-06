@@ -3,6 +3,7 @@
 #include <string.h>
 #include <limits.h>
 
+#include "db.h"
 #include "form.h"
 #include "files.h"
 #include "session.h"
@@ -35,6 +36,7 @@ int main(void)
   }
   else if (username) printf("Status: 400 Bad Request\n\n");
   else printf("Status: 403 Forbidden\n\n");
+  db_terminate();
   return EXIT_SUCCESS;
 }
 
