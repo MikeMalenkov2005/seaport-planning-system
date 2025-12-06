@@ -10,29 +10,34 @@
 
 int main(void)
 {
-  static char buffer[256];
+  static char buffers[2][256];
   char *query = getenv("QUERY_STRING");
   char *method = getenv("REQUEST_METHOD");
   char *cookie = getenv("HTTP_COOKIE");
   char *token = cookie ? strstr(cookie, "token=") : NULL;
   char *username = NULL;
   char *filename = NULL;
-  size_t fn_len = query ? form_get_length(query, "page") : 0;
+  size_t len = query ? form_get_length(query, "page") : 0;
   if (token)
   {
     token = strchr(token, '=') + 1;
     if (!session_is_token_valid(token)) token = NULL;
     else username = session_get_username(token);
   }
-  if (username && fn_len && fn_len < sizeof(buffer) - 5 && !strcmp(method, "GET"))
+  if (token && len && len < sizeof(buffers[1]) - 10 && !strcmp(method, "GET"))
   {
-    filename = strcat(form_get(buffer, sizeof(buffer), query, "page"), ".html");
-    if (files_exists(filename))
+    filename = form_get(buffers[0], sizeof(buffers[0]), query, "page");
+    if (filename)
     {
-      printf("Content-Type: text/html\n\n");
-      files_print(filename);
+      filename = strcat(strcat(strcpy(buffers[1], "html/"), filename), ".html");
+      if (files_exists(filename))
+      {
+        printf("Content-Type: text/html\n\n");
+        files_print(filename);
+      }
+      else printf("Status: 404 Not Found\n\n");
     }
-    else printf("Status: 404 Not Found\n\n");
+    else printf("Status 400 Bad Request\n\n");
   }
   else if (username) printf("Status: 400 Bad Request\n\n");
   else printf("Status: 403 Forbidden\n\n");
