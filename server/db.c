@@ -1,4 +1,5 @@
 #include "db.h"
+#include "form.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -155,5 +156,102 @@ void db_print_user_info(const char *username)
     }
   }
   putchar('}');
+}
+
+int db_add_bid(const char *form)
+{
+  const char *args[29];
+  PGresult *res;
+  int lens[29], formats[29] = { 0 };
+  int argnum = 0, result = 0;
+  const char *key = form_next_key(form);
+  if (key && db_init()) while (key)
+  {
+    if (!strcmp(key, "organization"))
+      if ((args[0] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "INN"))
+      if ((args[1] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "phone"))
+      if ((args[2] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "mail"))
+      if ((args[3] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "cargo_name"))
+      if ((args[4] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "TNVED"))
+      if ((args[5] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "direction"))
+      if ((args[6] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "length"))
+      if ((args[7] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "width"))
+      if ((args[8] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "height"))
+      if ((args[9] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "weight"))
+      if ((args[10] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "package"))
+      if ((args[11] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "characteristics"))
+      if ((args[12] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "transport_in"))
+      if ((args[13] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "transport_out"))
+      if ((args[14] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "date_out"))
+      if ((args[15] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "date_in"))
+      if ((args[16] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "store"))
+      if ((args[17] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "term"))
+      if ((args[18] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "demand"))
+      if ((args[19] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "creator"))
+      if ((args[20] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "sender"))
+      if ((args[21] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "send_port"))
+      if ((args[22] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "send_country"))
+      if ((args[23] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "get_port"))
+      if ((args[24] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "get_country"))
+      if ((args[25] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "getter"))
+      if ((args[26] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "other"))
+      if ((args[27] = form_clone(form, key))) ++argnum;
+    if (!strcmp(key, "quantity"))
+      if ((args[28] = form_clone(form, key))) ++argnum;
+  }
+  if (argnum == sizeof(args) / sizeof(*args))
+  {
+    while (argnum--) lens[argnum] = strlen(args[argnum]);
+    res = PQexecParams(conn, "INSERT INTO application (name_organization,"
+        "inn_organization, contact_phone, email, cargo_name, tn_code,"
+        "id_direction, unit_length, unit_width, unit_height, unit_mass,"
+        "cargo_packaging, structural_characteristics, id_transport_way_in,"
+        "id_transport_way_out, pickup_date, import_date, id_warehouse_type,"
+        "shelf_life, packaging_requirements, manufacturer, shipper,"
+        "departure_port, departure_country, destination_port,"
+        "destination_country, receiver, instructions_info, unit_count"
+        "id_application_status) VALUES ($1, $2, $3, $4, $5, $6, (SELECT "
+        "id_direction FROM direction WHERE name = $7), $8, $9,"
+        "$10, $11, $12, $13, (SELECT id_transport_way FROM transport_way "
+        "WHERE id_transport_way = $14), (SELECT id_transport_way FROM "
+        "transport_way WHERE id_transport_way = $15), $16, $17,"
+        "(SELECT id_warehouse_type FROM warehouse_type WHERE name = $18),"
+        "$19, $20, 21, $22, $23, $24, $25, $26, $27, $28, $29, 3);",
+        sizeof(args) / sizeof(*args), NULL, args, lens, formats, 0);
+    if (PQresultStatus(res) != PGRES_COMMAND_OK)
+    {
+      fprintf(stderr,
+          "INSERT INTO applications FAILED: %s\n", PQresultErrorMessage(res));
+    }
+    else result = 1;
+  }
+  return result;
 }
 

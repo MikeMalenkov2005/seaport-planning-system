@@ -8,14 +8,6 @@
 #include "input.h"
 #include "session.h"
 
-void redirect_loggedin_user(const char *username, const char *new_token)
-{
-  (void)username;
-  printf("Status: 303 See Other\n");
-  if (new_token) printf("Set-Cookie: token=%s; Max-Age=86400; Path=/; HttpOnly; Secure\n", new_token);
-  printf("Location: /html.cgi?page=BidList\n\n");
-}
-
 int main(void)
 {
   static char buffers[2][32];
@@ -38,7 +30,7 @@ int main(void)
       printf("Content-Type: text/html\n\n");
       files_print("html/Authorization.html");
     }
-    else redirect_loggedin_user(username, NULL);
+    else session_redirect_home(NULL);
   }
   else if (!strcmp(method, "POST"))
   {
@@ -53,7 +45,7 @@ int main(void)
       printf("Content-Type: text/html\n\n");
       files_print("html/Authorization.html");
     }
-    else redirect_loggedin_user(username, token);
+    else session_redirect_home(token);
   }
   else
   {

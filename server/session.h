@@ -7,5 +7,7 @@ int session_is_token_valid(const char *token);
 
 char *session_get_username(const char *token);
 
+void session_redirect_home(const char *new_token);
+
 #endif
 

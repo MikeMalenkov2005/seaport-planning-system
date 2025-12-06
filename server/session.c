@@ -40,3 +40,10 @@ char *session_get_username(const char *token)
   return data ? strtok(data, "\n") : NULL;
 }
 
+void session_redirect_home(const char *new_token)
+{
+  printf("Status: 303 See Other\n");
+  if (new_token) printf("Set-Cookie: token=%s; Max-Age=86400; Path=/; HttpOnly; Secure\n", new_token);
+  printf("Location: /html.cgi?page=BidList\n\n");
+}
+

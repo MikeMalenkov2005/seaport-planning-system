@@ -4,9 +4,7 @@
 #include <limits.h>
 
 #include "db.h"
-#include "form.h"
 #include "input.h"
-#include "files.h"
 #include "session.h"
 
 int main(void)
@@ -27,11 +25,13 @@ int main(void)
   {
     if (!strcmp(method, "POST"))
     {
-      printf("Content-Type: text/plain\n\n%s", input);
+      db_add_bid(input);
+      session_redirect_home(NULL);
     }
     else printf("Status: 400 Bad Request\n\n");
   }
   else printf("Status: 403 Forbidden\n\n");
+  free_input(input);
   db_terminate();
   return EXIT_SUCCESS;
 }
