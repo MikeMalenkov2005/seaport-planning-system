@@ -168,7 +168,6 @@ CREATE TABLE mar_ship (
 
 CREATE TABLE application (
   id_application SERIAL,
-  number VARCHAR(60) NOT NULL,
   name_organization VARCHAR(60) NOT NULL,
   inn_organization VARCHAR(60) NOT NULL,
   contact_phone VARCHAR(60) NOT NULL,
@@ -243,32 +242,39 @@ CREATE TABLE container (
 -- ========== FULL.SQL ==========
 
 INSERT INTO job_title (name) VALUES
-('Рабочий'),
-('Инженер'),
-('Оператор');
+('Адмнистратор'),
+('Таьоженник'),
+('Тальман'),
+('Диспетчер'),
+('Стивидор');
 
 INSERT INTO direction (name) VALUES
-('Север 32'),
-('Юг 337'),
-('Север 433/1');
+('Экспорт'),
+('Импорт');
 
 INSERT INTO transport_way (name) VALUES
-('Sea'),
-('Rail'),
-('Road');
+('Авто'),
+('Ж/Д'),
+('Водный');
 
 INSERT INTO warehouse_type (name) VALUES
-('Склад'),
-('Холодый склад');
+('Крытый'),
+('Открытый');
 
 INSERT INTO application_status (name) VALUES
-('Pending'),
-('Approved'),
-('Rejected');
+('Принята'),
+('Отказ'),
+('Направлена в таможню'),
+('Направлена на склад'),
+('Направлена диспетчеру'),
+('Направлена стивидору'),
+('Обрабатывается таможенником'),
+('Обрабатывается тальманом'),
+('Обрабатывается диспетчером'),
+('Обрабатывается стивидором');
 
 INSERT INTO vessel_type (name) VALUES
-('Грузовое судно'),
-('Танкер');
+('GP');
 
 INSERT INTO vessel_status (name) VALUES
 ('В порту'),
@@ -276,17 +282,26 @@ INSERT INTO vessel_status (name) VALUES
 ('Неисправен');
 
 INSERT INTO equipment_category (name) VALUES
-('Тяжелая техника');
+('Z'),
+('R'),
+('U'),
+('J');
 
 INSERT INTO external_dimensions (external_dimensions_code) VALUES
-('20ft'),
-('40ft'),
-('40ft');
+('PU'),
+('P2'),
+('P1');
 
 INSERT INTO container_status (name) VALUES
-('Пуст'),
-('Загружен'),
-('Приостановлен');
+('Занят'),
+('Свободен'),
+('Погружен'),
+('Не погружен'),
+('Направлен диспетчеру'),
+('Направлен стивидору'),
+('Обрабатывается на складе'),
+('Обрабатываеся диспетчером'),
+('Обрабатывается стивидором');
 
 INSERT INTO employee (surname, name, login, password, id_job_title) VALUES
 ('Иванов', 'Иван', 'ivanivanivan', 'ivanivanivan', 1);
