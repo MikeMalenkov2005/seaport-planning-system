@@ -1,4 +1,6 @@
-var menu_module.controller("MenuCont", function($scope, $http)
+var module = angular.module("BidListModule", []);
+
+module.controller("BidListCont", function($scope, $http)
 {
     $http.get("https://" + window.location.host + "/bid.cgi")
     .then(function(response)
