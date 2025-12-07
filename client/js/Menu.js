@@ -61,7 +61,7 @@ menu_module.controller("MenuCont", function($scope, $http)
 
         }
 
-        for (let i = 0; i < arr_t.length(); i++)
+        for (let i = 0; i < arr_t.length; i++)
         {
             let elem1 = document.createElement("li");
 			let elem2 = document.createElement("a")
