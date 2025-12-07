@@ -136,6 +136,7 @@ static void print_bids(int offset, int limit)
   }
   else if (res) for (i = 0; i < PQntuples(res); ++i)
   {
+    if (i) putchar(',');
     putchar('{');
     if ((value = PQgetvalue(res, i, 0))) printf("\"id\":%s", value);
     if ((value = PQgetvalue(res, i, 1))) printf(",\"org\":\"%s\"", value);
