@@ -84,7 +84,7 @@ static void print_bid(const char *id)
       putchar('\"');
     }
     if ((value = PQgetvalue(res, i, 33))) printf(",\"comment\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 34))) printf(",\"status\":\"%s\"", value);
+    if ((value = PQgetvalue(res, i, 34))) printf(",\"status\":%s", value);
     putchar('}');
   }
   else printf("Status: 404 Not Found\n\n");
