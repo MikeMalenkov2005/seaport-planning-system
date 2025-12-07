@@ -8,6 +8,28 @@
 #include "input.h"
 #include "session.h"
 
+static void print_pair(const char *key, const char *value, int flags)
+{
+  if (key && value)
+  {
+    if (!(flags & 2)) putchar(',');
+    printf("\"%s\":\"", key);
+    if (!(flags & 1)) while (*value) switch (*value)
+    {
+    case '\n':
+      putchar('\\');
+      putchar('\n');
+      break;
+    case '\"':
+      putchar('\\');
+    default:
+      putchar(*value++);
+    }
+    else printf("%s", value);
+    putchar('\"');
+  }
+}
+
 static void print_bid(const char *id)
 {
   int len = strlen(id), format = 0;
@@ -25,66 +47,39 @@ static void print_bid(const char *id)
   else if (PQntuples(res) == 1)
   {
     putchar('{');
-    if ((value = PQgetvalue(res, i, 0))) printf("\"id\":%s", value);
-    if ((value = PQgetvalue(res, i, 1))) printf(",\"org\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 2))) printf(",\"inn\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 3))) printf(",\"phone\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 4))) printf(",\"email\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 6))) printf(",\"name\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 7))) printf(",\"tnved\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 8))) printf(",\"direction\":%s", value);
-    if ((value = PQgetvalue(res, i, 9))) printf(",\"length\":%s", value);
-    if ((value = PQgetvalue(res, i, 10))) printf(",\"width\":%s", value);
-    if ((value = PQgetvalue(res, i, 11))) printf(",\"height\":%s", value);
-    if ((value = PQgetvalue(res, i, 12))) printf(",\"weight\":%s", value);
-    if ((value = PQgetvalue(res, i, 13))) printf(",\"count\":%s", value);
-    if ((value = PQgetvalue(res, i, 14))) printf(",\"packaging\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 16))) printf(",\"characteristics\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 17))) printf(",\"transport_in\":%s", value);
-    if ((value = PQgetvalue(res, i, 18))) printf(",\"transport_out\":%s", value);
-    if ((value = PQgetvalue(res, i, 19))) printf(",\"date_in\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 20))) printf(",\"date_out\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 22))) printf(",\"warehouse_type\":%s", value);
-    if ((value = PQgetvalue(res, i, 23))) printf(",\"shelf_life\":%s", value);
-    if ((value = PQgetvalue(res, i, 24)))
-    {
-      printf(",\"demands\":\"");
-      while (*value)
-      {
-        if (*value == '\n')
-        {
-          putchar('\\');
-          putchar('n');
-        }
-        else putchar(*value);
-        ++value;
-      }
-      putchar('\"');
-    }
-    if ((value = PQgetvalue(res, i, 25))) printf(",\"creator\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 26))) printf(",\"sender\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 27))) printf(",\"sender_port\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 28))) printf(",\"sender_country\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 29))) printf(",\"receiver_port\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 30))) printf(",\"receiver_country\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 31))) printf(",\"receiver\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 32)))
-    {
-      printf(",\"other\":\"");
-      while (*value)
-      {
-        if (*value == '\n')
-        {
-          putchar('\\');
-          putchar('n');
-        }
-        else putchar(*value);
-        ++value;
-      }
-      putchar('\"');
-    }
-    if ((value = PQgetvalue(res, i, 33))) printf(",\"comment\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 34))) printf(",\"status\":%s", value);
+    print_pair("id", PQgetvalue(res, i, 0), 3);
+    print_pair("org", PQgetvalue(res, i, 1), 0);
+    print_pair("inn", PQgetvalue(res, i, 2), 0);
+    print_pair("phone", PQgetvalue(res, i, 3), 0);
+    print_pair("email", PQgetvalue(res, i, 4), 0);
+    print_pair("name", PQgetvalue(res, i, 5), 0);
+    print_pair("tnved", PQgetvalue(res, i, 6), 0);
+    print_pair("direction", PQgetvalue(res, i, 7), 1);
+    print_pair("length", PQgetvalue(res, i, 8), 1);
+    print_pair("width", PQgetvalue(res, i, 9), 1);
+    print_pair("height", PQgetvalue(res, i, 10), 1);
+    print_pair("weight", PQgetvalue(res, i, 11), 1);
+    print_pair("count", PQgetvalue(res, i, 12), 1);
+    print_pair("packaging", PQgetvalue(res, i, 13), 0);
+    print_pair("characteristics", PQgetvalue(res, i, 15), 0);
+    print_pair("transport_in", PQgetvalue(res, i, 16), 1);
+    print_pair("transport_out", PQgetvalue(res, i, 17), 1);
+    print_pair("date_out", PQgetvalue(res, i, 18), 0);
+    print_pair("date_in", PQgetvalue(res, i, 19), 0);
+    print_pair("warehouse_type", PQgetvalue(res, i, 21), 1);
+    print_pair("shelf_life", PQgetvalue(res, i, 22), 1);
+    print_pair("demands", PQgetvalue(res, i, 23), 0);
+    print_pair("creator", PQgetvalue(res, i, 24), 0);
+    print_pair("sender", PQgetvalue(res, i, 25), 0);
+    print_pair("sender_port", PQgetvalue(res, i, 26), 0);
+    print_pair("sender_country", PQgetvalue(res, i, 27), 0);
+    print_pair("receiver_port", PQgetvalue(res, i, 28), 0);
+    print_pair("receiver_country", PQgetvalue(res, i, 29), 0);
+    print_pair("receiver", PQgetvalue(res, i, 30), 0);
+    print_pair("other", PQgetvalue(res, i, 31), 0);
+    print_pair("comment", PQgetvalue(res, i, 32), 0);
+    print_pair("status", PQgetvalue(res, i, 33), 1);
+    print_pair("worker", PQgetvalue(res, i, 34), 1);
     putchar('}');
   }
   else printf("Status: 404 Not Found\n\n");
