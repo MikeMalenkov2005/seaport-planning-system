@@ -29,6 +29,11 @@ body
 	text-align: left;
 }
 
+a
+{
+	color: #FFFFFF;
+}
+
 #auth_content
 {
 	background-color: #283593;

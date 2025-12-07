@@ -1,3 +1,20 @@
+var menu_module.controller("MenuCont", function($scope, $http)
+{
+    $http.get("https://" + window.location.host + "/bid.cgi")
+    .then(function(response)
+    {
+		$scope.st_list = ["Принята", "Отказ", "Направлена в таможню", "Направлена на склад", 
+		"Направлена диспетчеру", "Направлена стивидору", "Обрабатывается в таможне",
+		"Обрабатывается на складе", "Обрабатывается диспетчером", "Обрабатывается стивидором"];
+		
+        $scope.list = response.data;
+    })
+    .catch(function(error)
+    {
+		console.log("Wrong data");
+    });
+});
+
 function CheckOrganization()
 {
 	let result = /^ОАО "[A-Za-zА-Яа-я]{8,12}"$/.test(document.getElementsByName('organization')[0].value);

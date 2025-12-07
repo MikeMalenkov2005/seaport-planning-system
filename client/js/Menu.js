@@ -50,18 +50,66 @@ menu_module.controller("MenuCont", function($scope, $http)
         }
         else if (role == "Тальман")
         {
-
+			arr_t.push("Работа с заявкой");
+            arr_t.push("Взвешивание");
+            arr_t.push("Распределение по контейнерам");
+			arr_t.push("Список заявок");
+			arr_t.push("Список контейнеров");
+			arr_t.push("Просмотр заявки");
+			arr_t.push("Просмотр контейнера");
+			arr_t.push("Добавление контейнера");
+			arr_t.push("Изменение контейнера");
+			arr_t.push("Удаление контейнера");
+			
+			arr_l.push("/html.cgi?page=DistributionBidWork");
+            arr_l.push("/html.cgi?page=Weighing");
+            arr_l.push("/html.cgi?page=Distribution");
+			arr_l.push("/html.cgi?page=BidList");
+            arr_l.push("/html.cgi?page=BidContainer");
+            arr_l.push("/html.cgi?page=ShowBid");
+			arr_l.push("/html.cgi?page=ShowContainer");
+            arr_l.push("/html.cgi?page=AddUser");
+            arr_l.push("/html.cgi?page=ChangeBid");
+			arr_l.push("/html.cgi?page=RemoveBid");
         }
         else if (role == "Диспетчер")
         {
-
+			arr_t.push("Работа с контейнером");
+            arr_t.push("Планирование");
+            arr_t.push("Список контейнеров");
+			arr_t.push("Список морских судов");
+			arr_t.push("Просмотр контейнера");
+			arr_t.push("Просмотр морского судна");
+			arr_t.push("Добавление морского судна");
+			arr_t.push("Изменение морского судна");
+			arr_t.push("Удаление морского судна");
+			
+			arr_l.push("/html.cgi?page=PlanningContainerWork");
+            arr_l.push("/html.cgi?page=Planning");
+            arr_l.push("/html.cgi?page=ContainerList");
+			arr_l.push("/html.cgi?page=ShipList");
+            arr_l.push("/html.cgi?page=ShowContainer");
+            arr_l.push("/html.cgi?page=ShowShip");
+			arr_l.push("/html.cgi?page=AddShip");
+            arr_l.push("/html.cgi?page=ChangeShip");
+            arr_l.push("/html.cgi?page=RemoveShip");
         }
         else if (role == "Стивидор")
         {
-
+			arr_t.push("Работа с контейнером");
+            arr_t.push("Список контейнеров");
+            arr_t.push("Просмотр контейнера");
+			arr_t.push("Просмотр заявки");
+			arr_t.push("Схема погрузки");
+			
+			arr_l.push("/html.cgi?page=LoadingWork");
+            arr_l.push("/html.cgi?page=ContainerList");
+            arr_l.push("/html.cgi?page=ShowContainer");
+			arr_l.push("/html.cgi?page=ShowBid");
+            arr_l.push("/html.cgi?page=Schema");
         }
 
-        for (let i = 0; i < arr_t.length(); i++)
+        for (let i = 0; i < arr_t.length; i++)
         {
             let elem1 = document.createElement("li");
 			let elem2 = document.createElement("a")
@@ -76,6 +124,6 @@ menu_module.controller("MenuCont", function($scope, $http)
     })
     .catch(function(error)
     {
-
+		console.log("Wrong data");
     });
 });
