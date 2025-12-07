@@ -7,8 +7,8 @@ module.controller("MenuCont", function($scope, $http)
     {
         let role = response.data.role;
         let menu = document.createElement("ul");
-        let arr_t = [];
-        let arr_l = [];
+        let arr_t = ["Выйти"];
+        let arr_l = ["/logout.cgi"];
 
         if (role == "Администратор")
         {
@@ -108,6 +108,8 @@ module.controller("MenuCont", function($scope, $http)
 			arr_l.push("/html.cgi?page=ShowBid");
             arr_l.push("/html.cgi?page=Schema");
         }
+		
+		
 
         for (let i = 0; i < arr_t.length; i++)
         {
