@@ -10,30 +10,39 @@
 
 static void print_pair(const char *key, const char *value, int flags)
 {
-  if (key && value)
+  if (key && value && *value)
   {
     if (!(flags & 2)) putchar(',');
-    printf("\"%s\":\"", key);
-    if (!(flags & 1)) while (*value) switch (*value)
+    printf("\"%s\":", key);
+    if (!(flags & 1))
     {
-    case '\n':
-      putchar('\\');
-      putchar('\n');
-      break;
-    case '\"':
-      putchar('\\');
-    default:
-      putchar(*value++);
+      putchar('\"');
+      while (*value) switch (*value)
+      {
+      case '\r':
+        putchar('\\');
+        putchar('r');
+        ++value;
+      case '\n':
+        putchar('\\');
+        putchar('n');
+        ++value;
+        break;
+      case '\"':
+        putchar('\\');
+      default:
+        putchar(*value++);
+        break;
+      }
+      putchar('\"');
     }
     else printf("%s", value);
-    putchar('\"');
   }
 }
 
 static void print_bid(const char *id)
 {
   int len = strlen(id), format = 0;
-  const char *value;
   PGresult *res;
   const int i = 0;
   res = PQexecParams(db_conn(),

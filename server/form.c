@@ -27,6 +27,7 @@ char *form_get(char *buffer, size_t size, const char *form, const char *key)
           buffer[len] = from_hex(*form++) << 4;
           buffer[len] |= from_hex(*form++);
         }
+        else if (buffer[len] == '+') buffer[len] = ' ';
       }
       buffer[len] = 0;
       return buffer;
