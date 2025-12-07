@@ -46,8 +46,8 @@
 					<thead>
 						<tr><th>Идентификатор заявки</th><th>Статус</th></tr>
 					</thead>
-					<tbody ng-repeat='item in list'>
-						<tr><td>{{ item.id }}</td><td>{{ st_list[item.status-1] }}</td></tr>
+					<tbody>
+						<tr ng-repeat='item in list'><td>{{ item.id }}</td><td>{{ st_list[item.status-1] }}</td></tr>
 					</tbody>
 				</table>
 				<button><<</button>
