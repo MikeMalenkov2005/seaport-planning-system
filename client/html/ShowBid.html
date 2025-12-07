@@ -3,6 +3,9 @@
 	<head>
 		<title>Seaport Planning System</title>
 		<meta charset='utf-8'/>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src='../js/Menu.js'></script>
+		<script src='../js/Administration.js'></script>
 		<link rel='stylesheet' href='../css/style.css'/>
 	</head>
 	<body>
@@ -17,37 +20,142 @@
 				<table>
 					<caption><h3>Форма отображения заявки</h3></caption>
 					<tbody>
-						<tr><td>Идентификатор заявки:</td><td><input type='text'/></td><td>* Обязательно для заполнения</td></tr>
-						<tr><td><button>Выбрать</button></td></tr>
-						<tr><td>Наименование организации:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>ИНН организации:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Контактный телефон:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Адрес электронной почты:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Наименование груза:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Код ТН ВЭД:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Направление перевозки:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Длина единицы груза:</td><td><input type='number' readonly/></td></tr>
-						<tr><td>Ширина единицы груза:</td><td><input type='number' readonly/></td></tr>
-						<tr><td>Высота единицы груза:</td><td><input type='number' readonly/></td></tr>
-						<tr><td>Масса единицы груза:</td><td><input type='number' readonly/></td></tr>
-						<tr><td>Упаковка груза:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Транспортные характеристики груза:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Количество единиц груза:</td><td><input type='number' readonly/></td></tr>
-						<tr><td>Транспорт завоза:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Транспорт вывоза:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Склад:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Сроки хранения груза:</td><td><input type='number' readonly/></td></tr>
-						<tr><td>Требования к укладке и креплению груза на судне:</td><td><textarea rows='6' cols='20' readonly></textarea></td></tr>
-						<tr><td>Производитель груза:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Грузоотправитель:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Порт отправления:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Страна отправления:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Порт назначения:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Страна назначения:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Получатель груза:</td><td><input type='text' readonly/></td></tr>
-						<tr><td>Прочая информация:</td><td><textarea rows='6' cols='20' readonly></textarea></td></tr>
-						<tr><td>Комментарий:</td><td><textarea rows='6' cols='20' readonly></textarea></td></tr>
-						<tr><td>Статус:</td><td><input type='text' readonly/></td></tr>
+						<tr>
+							<td>Идентификатор заявки:</td>
+							<td><input type='text' id='id' name='id'/></td>
+							<td>* Обязательно для заполнения</td>
+						</tr>
+						<tr>
+							<td><button id='selectBtn' ng-click='find()'>Выбрать</button></td>
+						</tr>
+						<tr>
+							<td>Наименование организации:</td>
+							<td><input type='text' id='org' name='org' value='{{ org }}' readonly/></td>
+						</tr>
+						<tr>
+							<td>ИНН организации:</td>
+							<td><input type='text' id='inn' name='inn' value='{{ inn }}' readonly/></td>
+						</tr>
+						<tr>
+							<td>Контактный телефон:</td>
+							<td><input type='text' id='phone' name='phone' value='{{ phone }}' readonly/></td>
+						</tr>
+						<tr>
+							<td>Адрес электронной почты:</td>
+							<td><input type='text' id='email' name='email' value='{{ email }}' readonly/></td>
+						</tr>
+						<tr>
+							<td>Наименование груза:</td>
+							<td><input type='text' id='name' name='name' value='{{ name }}' readonly/></td>
+						</tr>
+						<tr>
+							<td>Код ТН ВЭД:</td>
+							<td><input type='text' id='tnved' name='tnved' value='{{ tnved }}' readonly/></td>
+						</tr>
+						<tr>
+							<td>Направление перевозки:</td>
+							<td><input type='text' id='direction' name='direction' readonly/></td>
+						</tr>
+						<tr>
+							<td>Длина единицы груза:</td>
+							<td><input type='number' id='length' name='length' step='0.01' readonly/></td>
+						</tr>
+						<tr>
+							<td>Ширина единицы груза:</td>
+							<td><input type='number' id='width' name='width' step='0.01' readonly/></td>
+						</tr>
+						<tr>
+							<td>Высота единицы груза:</td>
+							<td><input type='number' id='height' name='height' step='0.01' readonly/></td>
+						</tr>
+						<tr>
+							<td>Масса единицы груза:</td>
+							<td><input type='number' id='weight' name='weight' step='0.01' readonly/></td>
+						</tr>
+						<tr>
+							<td>Количество единиц груза:</td>
+							<td><input type='number' id='count' name='count' readonly/></td>
+						</tr>
+						<tr>
+							<td>Упаковка груза:</td>
+							<td><input type='text' id='packaging' name='packaging' readonly/></td>
+						</tr>
+						<tr>
+							<td>Транспортные характеристики груза:</td>
+							<td><input type='text' id='characteristics' name='characteristics' readonly/></td>
+						</tr>
+						<tr>
+							<td>Транспорт завоза:</td>
+							<td><input type='text' id='transport_in' name='transport_in' readonly/></td>
+						</tr>
+						<tr>
+							<td>Транспорт вывоза:</td>
+							<td><input type='text' id='transport_out' name='transport_out' readonly/></td>
+						</tr>
+						<tr>
+							<td>Дата прибытия:</td>
+							<td><input type='date' id='date_in' name='date_in' readonly/></td>
+						</tr>
+						<tr>
+							<td>Дата отгрузки:</td>
+							<td><input type='date' id='date_out' name='date_out' readonly/></td>
+						</tr>
+						<tr>
+							<td>Тип склада:</td>
+							<td><input type='text' id='warehouse_type' name='warehouse_type' readonly/></td>
+						</tr>
+						<tr>
+							<td>Сроки хранения груза:</td>
+							<td><input type='number' id='shelf_life' name='shelf_life' readonly/></td>
+						</tr>
+						<tr>
+							<td>Требования к укладке и креплению груза на судне:</td>
+							<td><textarea rows='6' cols='20' id='demands' name='demands' readonly></textarea></td>
+						</tr>
+						<tr>
+							<td>Производитель груза:</td>
+							<td><input type='text' id='creator' name='creator' readonly/></td>
+						</tr>
+						<tr>
+							<td>Грузоотправитель:</td>
+							<td><input type='text' id='sender' name='sender' readonly/></td>
+						</tr>
+						<tr>
+							<td>Порт отправления:</td>
+							<td><input type='text' id='sender_port' name='sender_port' readonly/></td>
+						</tr>
+						<tr>
+							<td>Страна отправления:</td>
+							<td><input type='text' id='sender_country' name='sender_country' readonly/></td>
+						</tr>
+						<tr>
+							<td>Порт назначения:</td>
+							<td><input type='text' id='receiver_port' name='receiver_port' readonly/></td>
+						</tr>
+						<tr>
+							<td>Страна назначения:</td>
+							<td><input type='text' id='receiver_country' name='receiver_country' readonly/></td>
+						</tr>
+						<tr>
+							<td>Получатель груза:</td>
+							<td><input type='text' id='receiver' name='receiver' readonly/></td>
+						</tr>
+						<tr>
+							<td>Прочая информация:</td>
+							<td><textarea rows='6' cols='20' id='other' name='other' readonly></textarea></td>
+						</tr>
+						<tr>
+							<td>Комментарий:</td>
+							<td><textarea rows='6' cols='20' id='comment' name='comment' readonly></textarea></td>
+						</tr>
+						<tr>
+							<td>Статус:</td>
+							<td><input type='text' id='status' name='status' readonly/></td>
+						</tr>
+						<tr>
+							<td>Ответственный работник:</td>
+							<td><input type='text' id='worker' name='worker' readonly/></td>
+						</tr>
 					</tbody>
 				</table>
 			</div>

@@ -15,6 +15,63 @@ module.controller("BidListCont", function($scope, $http)
     });
 });
 
+module.controller("ShowBidCont", function($scope, $http)
+{
+	$scope.find = function()
+	{
+		$http.get("https://" + window.location.host + "/ibid.cgi?id=" + document.getElementById("id").value)
+		.then(function(response)
+		{
+			st_list = ["Принята", "Отказ", "Направлена в таможню", "Направлена на склад", 
+			"Направлена диспетчеру", "Направлена стивидору", "Обрабатывается в таможне",
+			"Обрабатывается на складе", "Обрабатывается диспетчером", "Обрабатывается стивидором"];
+			
+			tr_list = ["Авто", "Ж/Д", "Водный"];
+		
+			dr_list = ["Экспорт", "Импорт"];
+			
+			wr_list = ["Крытый", "Открытый"];
+		
+			// Заполнение ВСЕХ полей из response.data
+			$scope.org = response.data.org;
+			$scope.inn = response.data.inn;
+			$scope.phone = response.data.phone;
+			$scope.email = response.data.email;
+			$scope.name = response.data.name;
+			$scope.toved = response.data.toved;
+			$scope.direction = dr_list[response.data.direction-1]; //
+			$scope.length = response.data.length;
+			$scope.width = response.data.width;
+			$scope.height = response.data.height;
+			$scope.weight = response.data.weight;
+			$scope.count = response.data.count;
+			$scope.packaging = response.data.packaging;
+			$scope.characteristics = response.data.characteristics;
+			$scope.transport_in = tr_list[response.data.transport_in-1];
+			$scope.transport_out = tr_list[response.data.transport_out-1];
+			$scope.date_out = response.data.date_out;
+			$scope.date_in = response.data.date_in;
+			$scope.warehouse_type = wr_list[response.data.warehouse_type-1];
+			$scope.shelf_life = response.data.shelf_life;
+			$scope.demands = response.data.demands;
+			$scope.creator = response.data.creator;
+			$scope.sender = response.data.sender;
+			$scope.sender_port = response.data.sender_port;
+			$scope.sender_country = response.data.sender_country;
+			$scope.receiver_port = response.data.receiver_port;
+			$scope.receiver_country = response.data.receiver_country;
+			$scope.receiver = response.data.receiver;
+			$scope.other = response.data.other;
+			$scope.comment = response.data.comment;
+			$scope.status = st_list[response.data.status-1];
+		})
+		.catch(function(error)
+		{
+			console.log("Wrong data");
+		});
+	}
+});
+
 function CheckOrganization()
 {
 	let result = /^ОАО "[A-Za-zА-Яа-я]{8,12}"$/.test(document.getElementsByName('organization')[0].value);
@@ -140,7 +197,7 @@ function CheckDateIn()
     let inputDate = new Date(document.getElementsByName('date_in')[0].value);
     let today = new Date();
     
-    let result = inputDate.toDateString() >= today.toDateString();
+    let result = inputDate.getTime() >= today.getTime();
     
     if (!result) {
         alert("Введена некорректная дата завоза!");
@@ -154,7 +211,7 @@ function CheckDateOut()
 	let inputDate = new Date(document.getElementsByName('date_out')[0].value);
     let today = new Date();
     
-    let result = inputDate.toDateString() >= today.toDateString();
+    let result = inputDate.getTime() >= getTime();
     
     if (!result) {
         alert("Введена некорректная дата вывоза!");
