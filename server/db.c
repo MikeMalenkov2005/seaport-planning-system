@@ -124,8 +124,8 @@ void db_print_user_info(const char *username)
   {
     p_length = strlen(username);
     res = PQexecParams(conn,
-        "SELECT (e.surname, e.name, e.patronymic, j.name) FROM employee AS e"
-        "JOIN job_title AS j ON e.id_job_title = j.id_job_title"
+        "SELECT e.surname, e.name, e.patronymic, j.name FROM employee AS e "
+        "JOIN job_title AS j ON e.id_job_title = j.id_job_title "
         "WHERE e.login = $1 LIMIT 1;",
         1, NULL, &username, &p_length, &p_format, 0);
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -134,7 +134,7 @@ void db_print_user_info(const char *username)
           "SELECT FROM employee JOIN job_title BY login FAILED: %s\n",
           PQresultErrorMessage(res));
     }
-    if (PQntuples(res) > 0 && PQnfields(res) == 4)
+    if (PQntuples(res) == 1 && PQnfields(res) == 4)
     {
       if (PQgetvalue(res, 0, 0))
       {
@@ -157,6 +157,7 @@ void db_print_user_info(const char *username)
         printf("\"role\":\"%s\"", PQgetvalue(res, 0, 3));
       }
     }
+    else fprintf(stderr, "%d, %d\n", PQntuples(res), PQnfields(res));
   }
   putchar('}');
 }
