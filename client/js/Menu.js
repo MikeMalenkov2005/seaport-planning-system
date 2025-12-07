@@ -40,7 +40,13 @@ menu_module.controller("MenuCont", function($scope, $http)
         }
         else if (role == "Таможенник")
         {
-
+			arr_t.push("Работа с заявкой");
+            arr_t.push("Список заявок");
+            arr_t.push("Просмотр заявки");
+			
+			arr_l.push("/html.cgi?page=SearchBidWork");
+            arr_l.push("/html.cgi?page=BidList");
+            arr_l.push("/html.cgi?page=ShowBid");
         }
         else if (role == "Тальман")
         {
@@ -57,11 +63,13 @@ menu_module.controller("MenuCont", function($scope, $http)
 
         for (let i = 0; i < arr_t.length(); i++)
         {
-            let elem = document.createElement("li");
+            let elem1 = document.createElement("li");
+			let elem2 = document.createElement("a")
 
-            elem.setAttribute("href", arr_l[i]);
-            elem.innerHTML = arr_t[i];
-            menu.appendChild(elem);
+            elem2.setAttribute("href", arr_l[i]);
+            elem2.innerHTML = arr_t[i];
+			elem1.appendChild(elem2);
+            menu.appendChild(elem1);
         }
 		
 		document.getElementById("navigation").appendChild(menu);
