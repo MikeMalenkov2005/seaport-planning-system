@@ -54,107 +54,107 @@
 						</tr>
 						<tr>
 							<td>Направление перевозки:</td>
-							<td><input type='text' id='direction' name='direction' readonly/></td>
+							<td><input type='text' id='direction' name='direction' value='{{ direction }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Длина единицы груза:</td>
-							<td><input type='number' id='length' name='length' step='0.01' readonly/></td>
+							<td><input type='text' id='length' name='length' value='{{ length }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Ширина единицы груза:</td>
-							<td><input type='number' id='width' name='width' step='0.01' readonly/></td>
+							<td><input type='text' id='width' name='width' value='{{ width }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Высота единицы груза:</td>
-							<td><input type='number' id='height' name='height' step='0.01' readonly/></td>
+							<td><input type='text' id='height' name='height' value='{{ height }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Масса единицы груза:</td>
-							<td><input type='number' id='weight' name='weight' step='0.01' readonly/></td>
+							<td><input type='text' id='weight' name='weight' value='{{ weight }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Количество единиц груза:</td>
-							<td><input type='number' id='count' name='count' readonly/></td>
+							<td><input type='text' id='count' name='count' value='{{ count }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Упаковка груза:</td>
-							<td><input type='text' id='packaging' name='packaging' readonly/></td>
+							<td><input type='text' id='packaging' name='packaging' value='{{ packaging }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Транспортные характеристики груза:</td>
-							<td><input type='text' id='characteristics' name='characteristics' readonly/></td>
+							<td><input type='text' id='characteristics' name='characteristics' value='{{ characteristics }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Транспорт завоза:</td>
-							<td><input type='text' id='transport_in' name='transport_in' readonly/></td>
+							<td><input type='text' id='transport_in' name='transport_in' value='{{ transport_in }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Транспорт вывоза:</td>
-							<td><input type='text' id='transport_out' name='transport_out' readonly/></td>
+							<td><input type='text' id='transport_out' name='transport_out' value='{{ transport_out }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Дата прибытия:</td>
-							<td><input type='date' id='date_in' name='date_in' readonly/></td>
+							<td><input type='text' id='date_in' name='date_in' value='{{ date_in }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Дата отгрузки:</td>
-							<td><input type='date' id='date_out' name='date_out' readonly/></td>
+							<td><input type='text' id='date_out' name='date_out' value='{{ date_out }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Тип склада:</td>
-							<td><input type='text' id='warehouse_type' name='warehouse_type' readonly/></td>
+							<td><input type='text' id='warehouse_type' name='warehouse_type' value='{{ warehouse_type }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Сроки хранения груза:</td>
-							<td><input type='number' id='shelf_life' name='shelf_life' readonly/></td>
+							<td><input type='text' id='shelf_life' name='shelf_life' value='{{ shelf_life }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Требования к укладке и креплению груза на судне:</td>
-							<td><textarea rows='6' cols='20' id='demands' name='demands' readonly></textarea></td>
+							<td><textarea rows='6' cols='20' id='demands' name='demands' value='{{ demands }}' readonly></textarea></td>
 						</tr>
 						<tr>
 							<td>Производитель груза:</td>
-							<td><input type='text' id='creator' name='creator' readonly/></td>
+							<td><input type='text' id='creator' name='creator' value='{{ creator }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Грузоотправитель:</td>
-							<td><input type='text' id='sender' name='sender' readonly/></td>
+							<td><input type='text' id='sender' name='sender' value='{{ sender }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Порт отправления:</td>
-							<td><input type='text' id='sender_port' name='sender_port' readonly/></td>
+							<td><input type='text' id='sender_port' name='sender_port' value='{{ sender_port }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Страна отправления:</td>
-							<td><input type='text' id='sender_country' name='sender_country' readonly/></td>
+							<td><input type='text' id='sender_country' name='sender_country' value='{{ sender_country }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Порт назначения:</td>
-							<td><input type='text' id='receiver_port' name='receiver_port' readonly/></td>
+							<td><input type='text' id='receiver_port' name='receiver_port' value='{{ receiver_port }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Страна назначения:</td>
-							<td><input type='text' id='receiver_country' name='receiver_country' readonly/></td>
+							<td><input type='text' id='receiver_country' name='receiver_country' value='{{ receiver_country }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Получатель груза:</td>
-							<td><input type='text' id='receiver' name='receiver' readonly/></td>
+							<td><input type='text' id='receiver' name='receiver' value='{{ receiver }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Прочая информация:</td>
-							<td><textarea rows='6' cols='20' id='other' name='other' readonly></textarea></td>
+							<td><textarea rows='6' cols='20' id='other' name='other' value='{{ other }}' readonly></textarea></td>
 						</tr>
 						<tr>
 							<td>Комментарий:</td>
-							<td><textarea rows='6' cols='20' id='comment' name='comment' readonly></textarea></td>
+							<td><textarea rows='6' cols='20' id='comment' name='comment' value='{{ comment }}' readonly></textarea></td>
 						</tr>
 						<tr>
 							<td>Статус:</td>
-							<td><input type='text' id='status' name='status' readonly/></td>
+							<td><input type='text' id='status' name='status' value='{{ status }}' readonly/></td>
 						</tr>
 						<tr>
 							<td>Ответственный работник:</td>
-							<td><input type='text' id='worker' name='worker' readonly/></td>
+							<td><input type='text' id='worker' name='worker' value='{{ worker }}' readonly/></td>
 						</tr>
 					</tbody>
 				</table>
