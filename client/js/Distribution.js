@@ -4,6 +4,8 @@ function CheckOwnerCode()
 	
 	if (result == false)
 		alert('Введён некорректный код владельца!');
+
+	return result;
 }
 
 function CheckSerial()
@@ -12,6 +14,8 @@ function CheckSerial()
 	
 	if (result == false)
 		alert('Введён некорректный серийный номер!');
+
+	return result;
 }
 
 function CheckControlNumber()
@@ -20,6 +24,8 @@ function CheckControlNumber()
 	
 	if (result == false)
 		alert('Введено некорректное контрольное число!');
+
+	return result;
 }
 
 function CheckCountryCode()
@@ -70,4 +76,21 @@ function CheckUsefull()
 		alert('Введена некорректная грузоподъёмность!');
 
 	return result;
+}
+
+function CheckSpace()
+{
+	let result = document.getElementsByName('space')[0].valueAsNumber > 0;
+
+	if (result == false)
+		alert('Введена некорректная вместимость!');
+
+	return result;
+}
+
+function CheckAddingContainer()
+{
+	return CheckOwnerCode() && CheckSerial() && CheckControlNumber() && 
+           CheckCountryCode() && CheckSizeCode() && CheckCargoWeight() && 
+           CheckContainerWeight() && CheckUsefull() && CheckSpace();
 }
