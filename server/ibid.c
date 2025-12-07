@@ -103,6 +103,7 @@ int main(void)
   char *cookie = getenv("HTTP_COOKIE");
   char *token = cookie ? strstr(cookie, "token=") : NULL;
   char *username = NULL;
+  char *id, *status;
   if (token)
   {
     token = strchr(token, '=') + 1;
@@ -112,10 +113,17 @@ int main(void)
   if (!username) printf("Status: 403 Forbidden\n\n");
   else if (!strcmp(method, "POST"))
   {
-    printf("Status: 501 Not Implemented\n\n");
+    id = form_get(buffer[0], sizeof(buffer[0]), input, "id");
+    status = form_get(buffer[0], sizeof(buffer[0]), input, "status");
+    if (id && status)
+    {
+      printf("Status: 501 Not Implemented\n\n");
+    }
+    else printf("Status: 400 Bad Request\n\n");
   }
   else if (!strcmp(method, "GET") && form_get_length(query, "id"))
   {
+    printf("Content-Type: application/json\n\n");
     print_bid(form_get(buffer[0], sizeof(buffer[0]), query, "id"));
   }
   else printf("Status: 400 Bad Request\n\n");
