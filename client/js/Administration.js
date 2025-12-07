@@ -38,7 +38,7 @@ module.controller("ShowBidCont", function($scope, $http)
 			$scope.phone = response.data.phone;
 			$scope.email = response.data.email;
 			$scope.name = response.data.name;
-			$scope.toved = response.data.toved;
+			$scope.tnved = response.data.tnved;
 			$scope.direction = dr_list[response.data.direction-1]; //
 			$scope.length = response.data.length;
 			$scope.width = response.data.width;
