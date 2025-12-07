@@ -197,7 +197,7 @@ static void print_bids(int offset, int limit)
       putchar('\"');
     }
     if ((value = PQgetvalue(res, i, 33))) printf(",\"comment\":\"%s\"", value);
-    if ((value = PQgetvalue(res, i, 34))) printf(",\"status\":\"%s\"", value);
+    if ((value = PQgetvalue(res, i, 34))) printf(",\"status\":%s", value);
     putchar('}');
   }
   putchar(']');
