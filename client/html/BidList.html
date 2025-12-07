@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='Module'>
 	<head>
 		<title>Seaport Planning System</title>
 		<meta charset='utf-8'/>
@@ -13,7 +13,7 @@
 			<div id='header'>
 				<h1>Seaport Planning System: Список заявок</h1>
 			</div>
-			<div id='navigation' ng-app='MenuModule' ng-controller="MenuCont">
+			<div id='navigation' ng-controller="MenuCont">
 				<h3>Меню:</h3>
 			</div>
 			<div id='content' align='center'>
@@ -41,7 +41,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<table border='1' class='visible' ng-app='BidListModule' ng-controller='BidListCont'>
+				<table border='1' class='visible' ng-controller='BidListCont'>
 					<caption><h3>Список заявок</h3></caption>
 					<thead>
 						<tr><th>Идентификатор заявки</th><th>Статус</th></tr>

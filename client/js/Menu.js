@@ -1,6 +1,6 @@
-var menu_module = angular.module("MenuModule", []);
+const module = angular.module("Module", []);
 
-menu_module.controller("MenuCont", function($scope, $http)
+module.controller("MenuCont", function($scope, $http)
 {
     $http.get("https://" + window.location.host + "/role.cgi")
     .then(function(response)

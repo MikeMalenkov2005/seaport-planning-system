@@ -1,5 +1,3 @@
-var module = angular.module("BidListModule", []);
-
 module.controller("BidListCont", function($scope, $http)
 {
     $http.get("https://" + window.location.host + "/bid.cgi")
