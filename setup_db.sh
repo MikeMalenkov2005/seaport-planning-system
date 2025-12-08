@@ -304,7 +304,11 @@ INSERT INTO container_status (name) VALUES
 ('Обрабатывается стивидором');
 
 INSERT INTO employee (surname, name, login, password, id_job_title) VALUES
-('Иванов', 'Иван', 'ivanivanivan', 'ivanivanivan', 1);
+('Иванов', 'Иван', 'ivanivanivan', 'ivanivanivan', 1),
+('Сидоров', 'Сидор', 'sidrsidrsidr', 'sidrsidrsidr', 2),
+('Петров', 'Пётр', 'petrpetrpetr', 'petrpetrpetr', 3),
+('Владов', 'Влад', 'vladvladvlad', 'vladvladvlad', 4),
+('Ильин', 'Илья', 'iliailiailia', 'iliailiailia', 5);
 
 EOF
 
