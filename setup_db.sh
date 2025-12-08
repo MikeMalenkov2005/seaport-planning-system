@@ -71,8 +71,7 @@ DROP TABLE IF EXISTS container CASCADE;
 
 CREATE TABLE blacklisted_tokens (
   id SERIAL,
-  token VARCHAR(160) NOT NULL,
-  expires_at TIMESTAMP NOT NULL
+  token VARCHAR(1024) NOT NULL
 );
 
 CREATE TABLE job_title (

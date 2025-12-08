@@ -92,6 +92,7 @@ static void print_bid(const char *id)
     putchar('}');
   }
   else printf("Status: 404 Not Found\n\n");
+  PQclear(res);
 }
 
 int main(void)

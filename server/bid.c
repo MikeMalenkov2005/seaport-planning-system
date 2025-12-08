@@ -100,6 +100,7 @@ if ((args[14] = form_clone(form, key))) ++argnum;
           "INSERT INTO applications FAILED: %s\n", PQresultErrorMessage(res));
     }
     else result = 1;
+    PQclear(res);
   }
   for (argnum = sizeof(args) / sizeof(*args); argnum--;)
   {
@@ -204,6 +205,7 @@ static void print_bids(int offset, int limit)
     print_pair("worker", PQgetvalue(res, i, 34), 1);
     putchar('}');
   }
+  if (res) PQclear(res);
   putchar(']');
 }
 

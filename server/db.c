@@ -157,7 +157,7 @@ void db_print_user_info(const char *username)
         printf("\"role\":\"%s\"", PQgetvalue(res, 0, 3));
       }
     }
-    else fprintf(stderr, "%d, %d\n", PQntuples(res), PQnfields(res));
+    PQclear(res);
   }
   putchar('}');
 }
